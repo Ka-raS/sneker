@@ -6,6 +6,8 @@
 
 ## How to run
 
+> Note: `git clone --branch inject https...` là nhánh nhập code Apple::reset() từ client
+
 ```bash
 git clone https://github.com/Ka-raS/sneker.git
 cd sneker
