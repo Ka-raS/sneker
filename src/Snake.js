@@ -3,6 +3,10 @@ import { Game } from "./Game.js";
 export class Snake {
 
     static COLOR = 0x00ff00;
+    static START_POSITION = [
+        new Phaser.Math.Vector2(4, 5),
+        new Phaser.Math.Vector2(5, 5)
+    ]
 
     constructor(scene) {
         this.scene = scene;
@@ -32,10 +36,9 @@ export class Snake {
         for (const segment of this.body) {
             segment.destroy();
         }
-        this.body = [
-            new Phaser.GameObjects.Rectangle(this.scene, 5, 5, 1, 1, Snake.COLOR),
-            new Phaser.GameObjects.Rectangle(this.scene, 4, 5, 1, 1, Snake.COLOR)
-        ];
+        this.body = Snake.START_POSITION.map(pos => 
+            new Phaser.GameObjects.Rectangle(this.scene, pos.x, pos.y, 1, 1, Snake.COLOR)
+        );
         for (const segment of this.body) {
             segment.setOrigin(0, 0);
             this.scene.add.existing(segment);
@@ -52,7 +55,7 @@ export class Snake {
             Phaser.Math.Wrap(this.getHead().x + this.direction.x, 0, Game.GRID_SIZE),
             Phaser.Math.Wrap(this.getHead().y + this.direction.y, 0, Game.GRID_SIZE),
             1, 1,
-            0x00ff00
+            Snake.COLOR
         );
 
         newHead.setOrigin(0, 0);
