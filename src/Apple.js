@@ -10,15 +10,14 @@ export class Apple extends Phaser.GameObjects.Rectangle {
         this.setOrigin(0, 0);
         this.reset();
         scene.add.existing(this);
+
+        // New
+        document.getElementById('btn-update-code').addEventListener('click', () => {
+            const code = document.getElementById('apple-reset-code').value.trim();
+            this.reset = new Function(code);
+        });
     }
 
-    reset() {
-        let x = this.x, y = this.y;
-        do {
-            x = Phaser.Math.Between(0, Game.GRID_SIZE - 1);
-            y = Phaser.Math.Between(0, Game.GRID_SIZE - 1);
-        } while (this.snakeBody.some(segment => segment.x === x && segment.y === y));
-        this.setPosition(x, y);
-    }
+    reset() {} // New
 
 }
