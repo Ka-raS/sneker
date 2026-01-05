@@ -3,10 +3,9 @@ import { Game } from './Game.js';
 export class Apple extends Phaser.GameObjects.Rectangle {
 
     static COLOR = 0xff0000;
-    static START_POSITION = new Phaser.Math.Vector2(0, 0);
 
     constructor(scene, snakeBody) {
-        super(scene, Apple.START_POSITION.x, Apple.START_POSITION.y, 1, 1, Apple.COLOR);
+        super(scene, 0, 0, 1, 1, Apple.COLOR);
         this.snakeBody = snakeBody;
         this.setOrigin(0, 0);
         this.reset();

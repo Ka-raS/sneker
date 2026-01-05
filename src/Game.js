@@ -13,7 +13,14 @@ export class Game extends Phaser.Scene {
         this.time = 0;
         this.snake = new Snake(this);
         this.apple = new Apple(this, this.snake.getBody());
-        this.inputs = this.input.keyboard.createCursorKeys();
+        
+        const keys = this.input.keyboard.createCursorKeys();
+        this.inputs = [
+            [keys.up,    Phaser.Math.Vector2.UP],
+            [keys.right, Phaser.Math.Vector2.RIGHT],
+            [keys.down,  Phaser.Math.Vector2.DOWN],
+            [keys.left,  Phaser.Math.Vector2.LEFT]
+        ];
     }
 
     update(time) {
@@ -26,13 +33,7 @@ export class Game extends Phaser.Scene {
 
 
     handleInput() {
-        const pairs = [
-            [this.inputs.left,  Phaser.Math.Vector2.LEFT],
-            [this.inputs.right, Phaser.Math.Vector2.RIGHT],
-            [this.inputs.up,    Phaser.Math.Vector2.UP],
-            [this.inputs.down,  Phaser.Math.Vector2.DOWN]
-        ];
-        for (const [key, direction] of pairs) {
+        for (const [key, direction] of this.inputs) {
             if (Phaser.Input.Keyboard.JustDown(key)) {
                 this.snake.setNextDirection(direction);
             }

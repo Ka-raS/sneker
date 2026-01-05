@@ -3,16 +3,39 @@ import { Game } from "./Game.js";
 export class Snake {
 
     static COLOR = 0x00ff00;
-    static START_POSITION = [
-        new Phaser.Math.Vector2(4, 5),
-        new Phaser.Math.Vector2(5, 5)
-    ]
 
     constructor(scene) {
         this.scene = scene;
-        this.direction = this.nextDirection = Phaser.Math.Vector2.RIGHT;
         this.body = [];
+        this.direction = this.nextDirection = Phaser.Utils.Array.GetRandom([
+            Phaser.Math.Vector2.UP,   Phaser.Math.Vector2.RIGHT,
+            Phaser.Math.Vector2.DOWN, Phaser.Math.Vector2.LEFT
+        ]);
         this.reset();
+    }
+
+    reset() {
+        const head = new Phaser.GameObjects.Rectangle(
+            this.scene,
+            Phaser.Math.Between(1, Game.GRID_SIZE - 2),
+            Phaser.Math.Between(1, Game.GRID_SIZE - 2),
+            1, 1, Snake.COLOR
+        );
+        const tail = new Phaser.GameObjects.Rectangle(
+            this.scene,
+            head.x - this.direction.x,
+            head.y - this.direction.y,
+            1, 1, Snake.COLOR
+        );
+
+        for (const segment of this.body) {
+            segment.destroy();
+        }
+        this.body = [tail, head];
+        for (const segment of this.body) {
+            segment.setOrigin(0, 0);
+            this.scene.add.existing(segment);
+        }
     }
 
     getHead() {
@@ -30,19 +53,6 @@ export class Snake {
     shrink() {
         this.body[0].destroy();
         this.body.shift();
-    }
-
-    reset() {
-        for (const segment of this.body) {
-            segment.destroy();
-        }
-        this.body = Snake.START_POSITION.map(pos => 
-            new Phaser.GameObjects.Rectangle(this.scene, pos.x, pos.y, 1, 1, Snake.COLOR)
-        );
-        for (const segment of this.body) {
-            segment.setOrigin(0, 0);
-            this.scene.add.existing(segment);
-        }
     }
 
     grow() {
