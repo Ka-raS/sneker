@@ -1,6 +1,7 @@
 # sneker
 
 <div align="center">
+  <a href="https://ka-ras.github.io/sneker/">https://ka-ras.github.io/sneker/</a>
   <img src="./screenshot.png" alt="Screenshot">
 </div>
 
