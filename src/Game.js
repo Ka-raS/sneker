@@ -33,7 +33,7 @@ export class Game extends Phaser.Scene {
     handleInput() {
         for (const [key, direction] of this.inputs) {
             if (Phaser.Input.Keyboard.JustDown(key)) {
-                this.snake.setNextDirection(direction);
+                this.snake.setDirection(direction);
             }
         }
     }

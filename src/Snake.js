@@ -3,37 +3,23 @@ import { CONFIG } from "./main.js";
 export class Snake {
 
     constructor(scene) {
-        this.scene = scene;
         this.body = [];
-        this.direction = this.nextDirection = Phaser.Utils.Array.GetRandom([
+        this.direction = Phaser.Utils.Array.GetRandom([
             Phaser.Math.Vector2.UP,   Phaser.Math.Vector2.RIGHT,
             Phaser.Math.Vector2.DOWN, Phaser.Math.Vector2.LEFT
         ]);
+        this.graphics = scene.add.graphics({fillStyle: { color: 0x00ff00 }});
         this.reset();
     }
 
     reset() {
-        const head = new Phaser.GameObjects.Rectangle(
-            this.scene,
+        const head = new Phaser.Math.Vector2(
             Phaser.Math.Between(1, CONFIG.width - 2),
-            Phaser.Math.Between(1, CONFIG.height - 2),
-            1, 1, Snake.#COLOR
-        );
-        const tail = new Phaser.GameObjects.Rectangle(
-            this.scene,
-            head.x - this.direction.x,
-            head.y - this.direction.y,
-            1, 1, Snake.#COLOR
+            Phaser.Math.Between(1, CONFIG.height - 2)
         );
 
-        for (const segment of this.body) {
-            segment.destroy();
-        }
-        this.body = [tail, head];
-        for (const segment of this.body) {
-            segment.setOrigin(0, 0);
-            this.scene.add.existing(segment);
-        }
+        this.body = [head, head.add(this.direction)];
+        this.redraw();
     }
 
     getHead() {
@@ -44,33 +30,33 @@ export class Snake {
         return this.body;
     }
 
-    setNextDirection(nextDirection) {
-        this.nextDirection = nextDirection;
+    setDirection(nextDirection) {
+        if (this.direction !== -nextDirection) {
+            this.direction = nextDirection;
+        }
     }
 
     shrink() {
-        this.body[0].destroy();
         this.body.shift();
+        this.redraw();
     }
 
     grow() {
-        if (this.direction.x !== -this.nextDirection.x || this.direction.y !== -this.nextDirection.y) {
-            this.direction = this.nextDirection;
-        }
-
-        const newHead = new Phaser.GameObjects.Rectangle(
-            this.scene,
-            Phaser.Math.Wrap(this.getHead().x + this.direction.x, 0, CONFIG.width),
-            Phaser.Math.Wrap(this.getHead().y + this.direction.y, 0, CONFIG.height),
-            1, 1,
-            Snake.#COLOR
+        const head = this.getHead();
+        const newHead = new Phaser.Math.Vector2(
+            Phaser.Math.Wrap(head.x + this.direction.x, 0, CONFIG.width),
+            Phaser.Math.Wrap(head.y + this.direction.y, 0, CONFIG.height),
         );
 
-        newHead.setOrigin(0, 0);
-        this.scene.add.existing(newHead);
         this.body.push(newHead);
+        this.redraw();
     }
 
-    static #COLOR = 0x00ff00;
+    redraw() {
+        this.graphics.clear();
+        for (const segment of this.body) {
+            this.graphics.fillRect(segment.x, segment.y, 1, 1);
+        }
+    }
 
 }
