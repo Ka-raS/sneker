@@ -13,12 +13,11 @@ export class Snake {
     }
 
     reset() {
-        const head = new Phaser.Math.Vector2(
+        const tail = new Phaser.Math.Vector2(
             Phaser.Math.Between(1, CONFIG.width - 2),
             Phaser.Math.Between(1, CONFIG.height - 2)
         );
-
-        this.body = [head, head.add(this.direction)];
+        this.body = [tail, tail.clone().add(this.direction)];
         this.redraw();
     }
 
