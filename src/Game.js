@@ -5,8 +5,13 @@ export class Game extends Phaser.Scene {
     
     static GRID_SIZE = 30;
 
+    // constructor() → init() → create()
     constructor() {
         super('Game');
+    }
+
+    init(data) {
+        this.tests = data.tests || [];
     }
 
     create() {
@@ -28,6 +33,10 @@ export class Game extends Phaser.Scene {
         if (this.shouldUpdate(time)) {
             this.snake.grow();
             this.handleCollisions();
+        }
+
+        for (const test of this.tests) {
+            test.check(this);
         }
     }
 
