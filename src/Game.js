@@ -2,8 +2,6 @@ import { Snake } from './Snake.js';
 import { Apple } from './Apple.js';
 
 export class Game extends Phaser.Scene {
-    
-    static GRID_SIZE = 30;
 
     constructor() {
         super('Game');

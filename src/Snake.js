@@ -1,8 +1,6 @@
-import { Game } from "./Game.js";
+import { CONFIG } from "./main.js";
 
 export class Snake {
-
-    static COLOR = 0x00ff00;
 
     constructor(scene) {
         this.scene = scene;
@@ -17,15 +15,15 @@ export class Snake {
     reset() {
         const head = new Phaser.GameObjects.Rectangle(
             this.scene,
-            Phaser.Math.Between(1, Game.GRID_SIZE - 2),
-            Phaser.Math.Between(1, Game.GRID_SIZE - 2),
-            1, 1, Snake.COLOR
+            Phaser.Math.Between(1, CONFIG.width - 2),
+            Phaser.Math.Between(1, CONFIG.height - 2),
+            1, 1, Snake.#COLOR
         );
         const tail = new Phaser.GameObjects.Rectangle(
             this.scene,
             head.x - this.direction.x,
             head.y - this.direction.y,
-            1, 1, Snake.COLOR
+            1, 1, Snake.#COLOR
         );
 
         for (const segment of this.body) {
@@ -62,15 +60,17 @@ export class Snake {
 
         const newHead = new Phaser.GameObjects.Rectangle(
             this.scene,
-            Phaser.Math.Wrap(this.getHead().x + this.direction.x, 0, Game.GRID_SIZE),
-            Phaser.Math.Wrap(this.getHead().y + this.direction.y, 0, Game.GRID_SIZE),
+            Phaser.Math.Wrap(this.getHead().x + this.direction.x, 0, CONFIG.width),
+            Phaser.Math.Wrap(this.getHead().y + this.direction.y, 0, CONFIG.height),
             1, 1,
-            Snake.COLOR
+            Snake.#COLOR
         );
 
         newHead.setOrigin(0, 0);
         this.scene.add.existing(newHead);
         this.body.push(newHead);
     }
+
+    static #COLOR = 0x00ff00;
 
 }

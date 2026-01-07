@@ -1,19 +1,17 @@
 import { Game } from './Game.js';
 
-const CONFIG = {
+export const CONFIG = Object.freeze({
     type: Phaser.AUTO,
     pixelArt: true,
-    width: Game.GRID_SIZE,
-    height: Game.GRID_SIZE,
+    width: 30,
+    height: 30,
     parent: 'game-container',
     backgroundColor: '#000000',
     scale: {
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH
     },
-    scene: [
-        Game
-    ]
-};
+    scene: [Game]
+});
 
 new Phaser.Game(CONFIG);
