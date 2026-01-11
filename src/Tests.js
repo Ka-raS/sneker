@@ -1,20 +1,31 @@
 class TestInterface {
-    check(game) {}
+    check() {}
 }
 
 export class AppleEatTest extends TestInterface {
 
-    #snakeSize  = -1;
-    #applePrevX = -1;
-    #applePrevY = -1;
+    #snakeSize;
+    #applePrevX;
+    #applePrevY;
+    #scene;
 
-    check(game) {
-        const snakeSize = game.snake.getBody().length;
+    constructor(scene) {
+        super();
+        this.#scene = scene;
+    }
+
+    prepare() {
+        this.#scene.apple.reset = function() {};
+        this.#snakeSize = this.#applePrevX = this.#applePrevY = -1;
+    }
+
+    check() {
+        const snakeSize = this.#scene.snake.getBody().length;
         if (this.#snakeSize === snakeSize) {
             return;
         }
         
-        const apple = game.apple;
+        const apple = this.#scene.apple;
         const isFirstCheck = this.#snakeSize === -1;
         this.#snakeSize = snakeSize;
         

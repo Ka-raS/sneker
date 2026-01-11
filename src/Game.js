@@ -11,7 +11,7 @@ export class Game extends Phaser.Scene {
     }
 
     init(data) {
-        this.tests = data.tests || [];
+        this.tests = data.tests.map(Class => new Class(this));
     }
 
     create() {
@@ -26,6 +26,10 @@ export class Game extends Phaser.Scene {
             [keys.down,  Phaser.Math.Vector2.DOWN],
             [keys.left,  Phaser.Math.Vector2.LEFT]
         ];
+
+        for (const test of this.tests) {
+            test.prepare();
+        }
     }
 
     update(time) {
@@ -36,7 +40,7 @@ export class Game extends Phaser.Scene {
         }
 
         for (const test of this.tests) {
-            test.check(this);
+            test.check();
         }
     }
 

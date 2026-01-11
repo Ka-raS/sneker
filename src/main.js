@@ -21,4 +21,4 @@ const game = new Phaser.Game(CONFIG);
  * @see Game#init
  * calls Game.init( data = {...} )
  */
-game.scene.start('Game', {tests: [new AppleEatTest()]});
+game.scene.start('Game', {tests: [AppleEatTest]});
