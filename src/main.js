@@ -1,24 +1,24 @@
-import { Game } from './Game.js';
-import { AppleEatTest } from './Tests.js';
+import { MyGame } from './MyGame.js';
+import { AppleResetTest } from './Tests.js';
 
-const CONFIG = {
+export const CONFIG = Object.freeze({
     type: Phaser.AUTO,
     pixelArt: true,
-    width: Game.GRID_SIZE,
-    height: Game.GRID_SIZE,
+    width: 30,
+    height: 30,
     parent: 'game-container',
     backgroundColor: '#000000',
     scale: {
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH
     },
-    scene: [Game]
-};
+    scene: [MyGame]
+});
 
 const game = new Phaser.Game(CONFIG);
 
 /**
- * @see Game#init
- * calls Game.init( data = {...} )
+ * @see MyGame#init
+ * gọi phương thức MyGame.init()
  */
-game.scene.start('Game', {tests: [AppleEatTest]});
+game.scene.start('MyGame', {tests: [AppleResetTest]});

@@ -6,6 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>sneker</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             background-color: black;
         }
@@ -17,22 +23,10 @@
 </head>
 
 <body>
-
-    <div> 
-        <textarea id="apple-reset-code" rows="6" cols="74">
-let x = this.x, y = this.y;
-do {
-    x = Math.floor(Math.random() * 30);
-    y = Math.floor(Math.random() * 30);
-} while (this.snakeBody.some(segment => segment.x === x && segment.y === y));
-this.setPosition(x, y);
-        </textarea>
-        <button id="btn-update-code">Submit</button>
-    </div>
-
-
-
+    <textarea id="test-apple-reset" rows="30" cols="74"></textarea>
+    <button id="btn-submit">Submit</button>
     <div id="game-container"></div>
+
     <script src="https://cdn.jsdelivr.net/npm/phaser@v3.90.0/dist/phaser.js" 
             integrity="sha512-IvUzEuZTpSRQD0F6xY0MkuXnNAfG6hJJ2mWefWcL/5+6HDcvBIuHknnuMkXJfInKKCHnPP5mu/qjua1YhFf2+w=="
             crossorigin="anonymous">
